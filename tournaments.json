@@ -1,0 +1,31 @@
+{
+    "tournaments": [
+        {
+            "name": "Tournoi National",
+            "place": "Grenoble",
+            "beginning_date": "23/11/2022",
+            "end_date": "25/11/2022",
+            "description": "good organisation",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "Tournoi Paris",
+            "place": "Paris",
+            "beginning_date": "23/11/2022",
+            "end_date": "25/11/2022",
+            "description": "good organisation",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "Tournoi Grenoble",
+            "place": "Grenoble",
+            "beginning_date": "23/11/2022",
+            "end_date": "25/11/2022",
+            "description": "good organisation",
+            "players": [],
+            "rounds": []
+        }
+    ]
+}

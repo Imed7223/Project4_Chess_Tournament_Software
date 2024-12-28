@@ -1,0 +1,207 @@
+{
+  "players_candidates": [
+    {
+      "firstName": "Dupont",
+      "lastName": "Jean",
+      "birth_date": "1990-01-15",
+      "national_id": "AB12345",
+      "score": 0
+    },
+    {
+      "firstName": "Martin",
+      "lastName": "Sophie",
+      "birth_date": "1992-03-22",
+      "national_id": "CD67890",
+      "score": 0
+    },
+    {
+      "firstName": "Petit",
+      "lastName": "Alain",
+      "birth_date": "1985-06-10",
+      "national_id": "EF13579",
+      "score": 0
+    },
+    {
+      "firstName": "Moreau",
+      "lastName": "Lucie",
+      "birth_date": "1989-08-12",
+      "national_id": "GH24680",
+      "score": 0
+    },
+    {
+      "firstName": "Girard",
+      "lastName": "Paul",
+      "birth_date": "1991-04-19",
+      "national_id": "IJ13579",
+      "score": 0
+    },
+    {
+      "firstName": "Blanc",
+      "lastName": "Julie",
+      "birth_date": "1987-12-30",
+      "national_id": "KL46802",
+      "score": 0
+    },
+    {
+      "firstName": "Roux",
+      "lastName": "Marc",
+      "birth_date": "1993-05-16",
+      "national_id": "MN75346",
+      "score": 0
+    },
+    {
+      "firstName": "Fontaine",
+      "lastName": "Claire",
+      "birth_date": "1995-09-23",
+      "national_id": "OP15926",
+      "score": 0
+    },
+    {
+      "firstName": "Noir",
+      "lastName": "Lucas",
+      "birth_date": "1990-11-08",
+      "national_id": "QR86420",
+      "score": 0
+    },
+    {
+      "firstName": "Perrot",
+      "lastName": "Alice",
+      "birth_date": "1986-03-14",
+      "national_id": "ST97531",
+      "score": 0
+    },
+    {
+      "firstName": "Lopez",
+      "lastName": "Hugo",
+      "birth_date": "1988-06-05",
+      "national_id": "UV24680",
+      "score": 0
+    },
+    {
+      "firstName": "Durand",
+      "lastName": "Elodie",
+      "birth_date": "1990-07-22",
+      "national_id": "WX75313",
+      "score": 0
+    },
+    {
+      "firstName": "Lemoine",
+      "lastName": "Yann",
+      "birth_date": "1994-01-18",
+      "national_id": "YZ24680",
+      "score": 0
+    },
+    {
+      "firstName": "Marchand",
+      "lastName": "Eva",
+      "birth_date": "1992-10-09",
+      "national_id": "AB75364",
+      "score": 0
+    },
+    {
+      "firstName": "Gauthier",
+      "lastName": "Nathan",
+      "birth_date": "1993-11-12",
+      "national_id": "CD53148",
+      "score": 0
+    },
+    {
+      "firstName": "Perrin",
+      "lastName": "Louise",
+      "birth_date": "1989-02-06",
+      "national_id": "EF15937",
+      "score": 0
+    },
+    {
+      "firstName": "Robin",
+      "lastName": "Tom",
+      "birth_date": "1995-08-29",
+      "national_id": "GH86420",
+      "score": 0
+    },
+    {
+      "firstName": "Leclerc",
+      "lastName": "Emma",
+      "birth_date": "1990-12-25",
+      "national_id": "IJ75313",
+      "score": 0
+    },
+    {
+      "firstName": "Bertrand",
+      "lastName": "Léo",
+      "birth_date": "1991-03-03",
+      "national_id": "KL46802",
+      "score": 0
+    },
+    {
+      "firstName": "Renaud",
+      "lastName": "Marie",
+      "birth_date": "1992-06-18",
+      "national_id": "MN97531",
+      "score": 0
+    },
+    {
+      "firstName": "Fischer",
+      "lastName": "Maxime",
+      "birth_date": "1988-09-14",
+      "national_id": "OP86420",
+      "score": 0
+    },
+    {
+      "firstName": "Schmidt",
+      "lastName": "Amélie",
+      "birth_date": "1994-05-03",
+      "national_id": "QR15926",
+      "score": 0
+    },
+    {
+      "firstName": "Meyer",
+      "lastName": "Alex",
+      "birth_date": "1991-07-17",
+      "national_id": "ST53148",
+      "score": 0
+    },
+    {
+      "firstName": "Chevalier",
+      "lastName": "Sarah",
+      "birth_date": "1987-01-10",
+      "national_id": "UV97531",
+      "score": 0
+    },
+    {
+      "firstName": "Roussel",
+      "lastName": "Victor",
+      "birth_date": "1995-02-25",
+      "national_id": "WX15937",
+      "score": 0
+    },
+    {
+      "firstName": "Lambert",
+      "lastName": "Chloé",
+      "birth_date": "1986-04-21",
+      "national_id": "YZ75364",
+      "score": 0
+    },
+    {
+      "firstName": "Garcia",
+      "lastName": "Simon",
+      "birth_date": "1989-11-30",
+      "national_id": "AB97531",
+      "score": 0
+    },
+    {
+      "firstName": "Morel",
+      "lastName": "Anaïs",
+      "birth_date": "1993-01-08",
+      "national_id": "CD15926",
+      "score": 0
+    },
+    {
+      "firstName": "Fournier",
+      "lastName": "Théo",
+      "birth_date": "1992-09-19",
+      "national_id": "EF75313",
+      "score": 0
+    }
+  ]
+}

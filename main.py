@@ -4,6 +4,10 @@ from controllers.controller_tournament import TournamentController
 
 def run():
     controller = TournamentController()
+    controller.save_tournaments_to_json("tournaments.json")
+
+    # Charger les tournois
+    controller.load_tournaments_from_json("tournaments.json")
     while True:
         MenuView.display_message(MenuView.afficher_menu_principal())
         choice = MenuView.get_choice()
@@ -28,10 +32,8 @@ def run():
             controller.details_all_tournaments_rounds_and_matchs()
 
         elif choice == "10":
-            controller.details_rounds_and_matchs()
+            controller.display_and_save_players_ranking()
         elif choice == "11":
-            controller.display_players_ranking()
-        elif choice == "12":
             MenuView.display_message("Bye !")
             break
         else:
@@ -40,6 +42,3 @@ def run():
 
 if __name__ == "__main__":
     run()
-
-
-

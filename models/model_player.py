@@ -1,5 +1,6 @@
 import re
 
+
 class Player:
     def __init__(self, firstName, lastName, birth_date, national_id, score=0):
         if not re.fullmatch(r"[A-Z]{2}\d{5}", national_id):

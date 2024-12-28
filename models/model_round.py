@@ -11,8 +11,5 @@ class Round:
     def finished(self):
         self.end = datetime.now()
 
-
     def __repr__(self):
         return f"{self.number} - Begining: {self.begining}, End: {self.end}, Matchs: {len(self.matchs)}"
-
-

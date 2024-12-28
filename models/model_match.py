@@ -5,6 +5,7 @@ class Match:
         self.score_playerA = score_playerA
         self.score_playerB = score_playerB
         self.score = 0
+
     def __repr__(self):
         return (
             f"Match: {self.playerA.firstName} {self.playerA.lastName} ({self.score_playerA} points)({self.score}points)"
@@ -12,11 +13,9 @@ class Match:
         )
 
     def save_result(self, score_playerA, score_playerB):
-        #Mise à jour des scores du match.
+        # Mise à jour des scores du match.
         self.score_playerA = score_playerA
         self.score_playerB = score_playerB
         # Mise à jour des scores des joueurs
         self.playerA['score'] += score_playerA
         self.playerB['score'] += score_playerB
-
-
