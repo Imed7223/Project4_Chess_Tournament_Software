@@ -8,14 +8,20 @@ class Match:
 
     def __repr__(self):
         return (
-            f"Match: {self.playerA.firstName} {self.playerA.lastName} ({self.score_playerA} points)({self.score}points)"
-            f"vs {self.playerB.firstName} {self.playerB.lastName} ({self.score_playerB} points)({self.score}points)"
+            f"Match: {self.playerA['firstName']} {self.playerA['lastName']}"
+            f" ({self.score_playerA} points)({self.score}points)"
+            f"vs {self.playerB['firstName']} {self.playerB['lastName']} "
+            f"({self.score_playerB} points)({self.score}points)"
         )
 
-    def save_result(self, score_playerA, score_playerB):
-        # Mise à jour des scores du match.
+    def save_result(self, score_playerA, score_playerB, score):
         self.score_playerA = score_playerA
         self.score_playerB = score_playerB
-        # Mise à jour des scores des joueurs
-        self.playerA['score'] += score_playerA
-        self.playerB['score'] += score_playerB
+
+    def to_dict(self):
+        return {
+            "playerA": self.playerA,
+            "playerB": self.playerB,
+            "score_playerA": self.score_playerA,
+            "score_playerB": self.score_playerB,
+        }

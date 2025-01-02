@@ -1,5 +1,6 @@
 import random
 from models.model_match import Match
+from datetime import datetime
 
 
 class MenuView:
@@ -104,6 +105,7 @@ class MenuView:
         """
         print("=== Ranking of players ===: \
                 \nTournament result :")
+
         for player in players:
             print(f"- {player['firstName']} {player['lastName']} (Score : {player['score']})")
 
@@ -116,17 +118,50 @@ class MenuView:
     @staticmethod
     def add_new_tournament():
         print("\n=== Création d'un nouveau tournoi ===")
-        name = input("Nom du tournoi : ").strip()
-        place = input("Lieu du tournoi : ").strip()
-        beginning_date = input("Date de début (format JJ/MM/AAAA) : ").strip()
-        end_date = input("Date de fin (format JJ/MM/AAAA) : ").strip()
-        description = input("Description : ").strip()
+
+        while True:
+            name = input("Nom du tournoi : ").strip()
+            if name.replace(" ", "").isalpha():
+                break
+            print("Erreur : Le nom du tournoi doit contenir uniquement des lettres.")
+
+        while True:
+            place = input("Lieu du tournoi : ").strip()
+            if place.replace(" ", "").isalpha():
+                break
+            print("Erreur : Le lieu doit contenir uniquement des lettres.")
+
+        while True:
+            beginning_date = input("Date de début (format JJ/MM/AAAA) : ").strip()
+            try:
+                beginning_date_obj = datetime.strptime(beginning_date, '%d/%m/%Y')
+                break
+            except ValueError:
+                print("Erreur : Veuillez entrer une date valide au format JJ/MM/AAAA.")
+
+        while True:
+            end_date = input("Date de fin (format JJ/MM/AAAA) : ").strip()
+            try:
+                end_date_obj = datetime.strptime(end_date, '%d/%m/%Y')
+                if end_date_obj >= beginning_date_obj:
+                    break
+                else:
+                    print("Erreur : La date de fin doit être après la date de début.")
+            except ValueError:
+                print("Erreur : Veuillez entrer une date valide au format JJ/MM/AAAA.")
+
+        while True:
+            description = input("Description : ").strip()
+            if description.replace(" ", "").isalpha():
+                break
+            print("Erreur : La description doit contenir uniquement des lettres.")
+
         # Retourner les données sous forme de dictionnaire
         return {
             "name": name,
             "place": place,
-            "beginning_date": beginning_date,
-            "end_date": end_date,
+            "beginning_date": beginning_date_obj,
+            "end_date": end_date_obj,
             "description": description,
         }
 
@@ -140,6 +175,7 @@ class MenuView:
 
     @staticmethod
     def playing_4_rounds(pairs, round_instance, selected_tournament):
+        score1 = score2 = None
         # Play 4 rounds of the tournament.
         for playerA, playerB in pairs:
             """All those combinations are wrongs : \
@@ -147,47 +183,60 @@ class MenuView:
                                             \n(score_playerB == 1 and score_playerA != 0) or \
                                             \n(score_playerA == 0 and score_playerB == 0) or \
                                             \n(score_playerA == 0.5 and score_playerB != 0.5)")"""
-            print(f"Match between: {playerA} vs {playerB}")
-            try:
-                score1 = float(
-                    input(f"Score of PlayerA: {playerA['firstName']} {playerA['lastName']} |you must choose  ("
-                          f"0, 0.5, or 1): "))
-                score2 = float(
-                    input(f"Score of PlayerB: {playerB['firstName']} {playerB['lastName']} |you must choose  ("
-                          f"0, 0.5, or 1): "))
-                if (score1 == 1 and score2 != 0) or \
-                        (score1 == 0 and score2 != 1) or \
-                        (score1 == 0 and score2 == 0) or \
-                        (score1 == 0.5 and score2 != 0.5) or \
-                        (score1 not in [0, 0.5, 1] or score2 not in [0, 0.5, 1]) or \
-                        (0 > score1 > 1 or 0 > score2 > 1):
-                    print("Error: Invalid score combination. Please press choice 4 to repeat.")
-                    while score1 and score2 is True:
+            print(f"Match / between: \n*****{playerA["firstName"]} {playerA["lastName"]} {playerA["national_id"]} <= "
+                  f"vs =>"
+                  f" {playerB["firstName"]} {playerB["lastName"]} {playerA["national_id"]}*****")
+            valid_scores = False
+            while not valid_scores:
+                try:
+                    score1_input = input(
+                        f"Score of PlayerA: {playerA['firstName']} {playerA['lastName']} |you must choose ("
+                        f"0, 0.5, or 1): ").strip()
+                    score2_input = input(
+                        f"Score of PlayerB: {playerB['firstName']} {playerB['lastName']} |you must choose ("
+                        f"0, 0.5, or 1): ").strip()
+
+                    # Check if the inputs are empty
+                    if not score1_input or not score2_input:
+                        print("Error: Empty score is invalid. Please try again.")
                         continue
-                    return
-                    # Displaying final scores
-                    match = Match(playerA, playerB)
-                    total_score_playerA = match.score_playerA
-                    total_score_playerB = match.score_playerB
-                    print(f"Final Score -> Player A: {total_score_playerA}, "
-                          f"Player B: {total_score_playerB}")
-                match = Match(playerA, playerB)
-                match.save_result(score1, score2)
-                round_instance.matchs.append(match)
-                if score1 > score2:
-                    print(f"Winners : {playerA['firstName']} {playerA['lastName']}")
-                elif score2 > score1:
-                    print(f"Winners : {playerB['firstName']} {playerB['lastName']}")
-                else:
-                    print("Draw match")
-            except ValueError:
-                MenuView.display_message("Veuillez entrer des scores valides.")
+
+                    # Convert inputs to float
+                    score1 = float(score1_input)
+                    score2 = float(score2_input)
+                    # Validate scores
+                    if (score1 == 1 and score2 != 0) or \
+                            (score1 == 0 and score2 != 1) or \
+                            (score1 == 0 and score2 == 0) or \
+                            (score1 == 0.5 and score2 != 0.5) or \
+                            (score1 not in [0, 0.5, 1] or score2 not in [0, 0.5, 1]) or \
+                            (0 > score1 > 1 or 0 > score2 > 1):
+                        print("Error: Invalid score combination. Please try again.")
+                        continue
+                    valid_scores = True  # Exit loop if inputs are valid
+
+                except ValueError:
+                    print("Error: Invalid input. Please enter a numeric score (0, 0.5, or 1).")
+
+            # If valid scores are entered, proceed
+            match = Match(playerA, playerB)
+            match.save_result(score1, score2, score=None)
+            round_instance.matchs.append(match)
+            playerA["score"] += score1
+            playerB["score"] += score2
+            if score1 > score2:
+                print(f"Winners : {playerA['firstName']} {playerA['lastName']}")
+            elif score2 > score1:
+                print(f"Winners : {playerB['firstName']} {playerB['lastName']}")
+            else:
+                print("Draw match")
+
         round_instance.finished()
         selected_tournament.rounds.append(round_instance)
         print(round_instance)
 
     @staticmethod
-    def disply_all_details_rounds_and_matchs(tournaments):
+    def disply_all_details_rounds_and_matchs(tournaments, sorted_players=None):
         for index, tournament in enumerate(tournaments, 1):
             print(f"{index}. {tournament.name} - {tournament.place}")
         try:
@@ -212,12 +261,13 @@ class MenuView:
             )
             if not selected_tournament.rounds:
                 print("No rounds have been played yet for this tournament.")
-                return exit()
-            print("\n=== Round Details ===")
+                return
+
             # Affichage des rounds et matchs du tournoi sélectionné
             for round_instance in selected_tournament.rounds:
+                print("\n=== Round Details ===")
                 print(f"\nRound {round_instance.number}")
-                print(f"Beginning : {round_instance.begining}")
+                print(f"Beginning : {round_instance.beginning}")
                 print(f"End : {round_instance.end}")
                 f"- {round_instance.end if round_instance.end else 'Not finished'}"
                 print("\nMatchs :")
@@ -225,7 +275,7 @@ class MenuView:
                     print(
                         f"- {match.playerA['firstName']} {match.playerA['lastName']} "
                         f"(Score: {match.score_playerA}) vs "
-                        f"{match.playerB['firstName']} {match.playerB['lastName']} "
+                        f"- {match.playerB['firstName']} {match.playerB['lastName']} "
                         f"(Score: {match.score_playerB})"
                     )
         except ValueError:

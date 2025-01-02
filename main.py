@@ -11,7 +11,6 @@ def run():
     while True:
         MenuView.display_message(MenuView.afficher_menu_principal())
         choice = MenuView.get_choice()
-
         if choice == "1":
             controller.add_new_tournament()
         elif choice == "2":

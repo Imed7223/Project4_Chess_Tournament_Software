@@ -2,7 +2,9 @@ from json_manager import JSONManager
 from models.model_tournament import Tournament
 from views.menu import MenuView
 from models.model_round import Round
+from models.model_player import Player
 import random
+import json
 
 
 class TournamentController:
@@ -15,79 +17,96 @@ class TournamentController:
         self.MenuView = MenuView
         self.selected_tournament = None
 
-    @staticmethod
-    def create_new_tournament(name, place, beginning_date, end_date, description):
-        new_tournament = Tournament(
-            name=name,
-            place=place,
-            beginning_date=beginning_date,
-            end_date=end_date,
-            description=description,
-            players=[],
-            selected_tournament=[],
-            rounds=[],
-            generate_pairs=[]
-        )
-        return new_tournament
-
     def save_tournaments_to_json(self, filename="tournaments.json"):
-        tournaments_data = []
-        for tournament in self.tournaments:
-            tournaments_data.append({
-                "name": tournament.name,
-                "place": tournament.place,
-                "beginning_date": tournament.beginning_date.strftime("%d/%m/%Y"),
-                "end_date": tournament.end_date.strftime("%d/%m/%Y"),
-                "description": tournament.description,
-                "players": [
-                    {
-                        "firstName": player["firstName"],
-                        "lastName": player["lastName"],
-                        "birth_date": player["birth_date"],
-                        "national_id": player["national_id"],
-                        "score": player["score"],
-                    }
-                    for player in tournament.players
-                ],
-                "rounds": [round.__dict__ for round in tournament.rounds]
-            })
-        JSONManager.save_to_file({"tournaments": tournaments_data}, filename)
+        data = {
+            "tournaments": [
+                {
+                    "name": tournament.name,
+                    "place": tournament.place,
+                    "beginning_date": tournament.beginning_date.strftime("%d/%m/%Y"),
+                    "end_date": tournament.end_date.strftime("%d/%m/%Y"),
+                    "description": tournament.description,
+                    "players": [player for player in tournament.players],
+                    "rounds": [round.to_dict() for round in tournament.rounds],  # Utilisation de to_dict
+                }
+                for tournament in self.tournaments
+            ]
+        }
+        JSONManager.save_to_file(data, filename)
 
-    def load_tournaments_from_json(self, filename="tournaments.json"):
+    def load_tournaments_from_json(self, filename: str = "tournaments.json"):
+        # Charger les données JSON
         data = JSONManager.load_from_file(filename)
         if data and "tournaments" in data:
             self.tournaments = []
             for tournament_data in data["tournaments"]:
-                new_tournament = Tournament(
-                    name=tournament_data["name"],
-                    place=tournament_data["place"],
-                    beginning_date=tournament_data["beginning_date"],
-                    end_date=tournament_data["end_date"],
-                    description=tournament_data["description"],
-                    players=tournament_data["players"],
-                    selected_tournament=[],
-                    rounds=[],
-                    generate_pairs=[]
-                )
-                self.tournaments.append(new_tournament)
+                # Charger les données des joueurs
+                players = []
+                for player_data in tournament_data.get("players", []):
+                    # Vérifier si player_data est bien un dictionnaire
+                    if not isinstance(player_data, dict):
+                        continue
+                    try:
+                        # Tenter de créer une instance Player
+                        player = Player(**player_data)
+                        players.append(player)
+                    except TypeError as e:
+                        print(f"Error creating Player instance: {e}. Data: {player_data}")
+                    except KeyError as e:
+                        print(f"Missing key in player data: {e}. Data: {player_data}")
+                # Trier les joueurs par ordre décroissant de leur score
+                players.sort(key=lambda player: player.score, reverse=True)
+                rounds = []
+                for round_data in tournament_data.get("rounds", []):
+                    # Harmonisation du champ 'matchs' en 'matches'
+                    if 'matchs' in round_data:
+                        round_data['matchs'] = round_data.pop('matchs')
+                    # Suppression du champ 'end' s'il existe
+                    round_data.pop('end', None)
+                    try:
+                        rounds.append(Round(**round_data))
+                    except TypeError as e:
+                        print(f"Error loading round data: {e}")
+                try:
+                    new_tournament = Tournament(
+                        name=tournament_data["name"],
+                        place=tournament_data["place"],
+                        beginning_date=tournament_data["beginning_date"],
+                        end_date=tournament_data["end_date"],
+                        description=tournament_data["description"],
+                        players=players,
+                        rounds=rounds
+                    )
+                    self.tournaments.append(new_tournament)
+                except KeyError as e:
+                    print(f"Missing tournament data key: {e}")
+                except TypeError as e:
+                    print(f"Error loading tournament data: {e}")
 
     def add_new_tournament(self):
         # Récupération des données du tournoi depuis la vue
-        tournament = self.MenuView.add_new_tournament()
-
-        # Création du tournoi
-        new_tournament = self.create_new_tournament(
-            name=tournament["name"],
-            place=tournament["place"],
-            beginning_date=tournament["beginning_date"],
-            end_date=tournament["end_date"],
-            description=tournament["description"],
+        tournament_data = self.MenuView.add_new_tournament()
+        # Création et initialisation du nouveau tournoi
+        new_tournament = Tournament(
+            name=tournament_data["name"],
+            place=tournament_data["place"],
+            beginning_date=tournament_data["beginning_date"],
+            end_date=tournament_data["end_date"],
+            description=tournament_data["description"],
+            players=[],  # Liste des joueurs vide par défaut
+            selected_tournament=[],  # Aucun tournoi sélectionné par défaut
+            rounds=[],  # Aucun round initial
+            generate_pairs=[]  # Pas de paires générées initialement
         )
 
-        # Ajout du tournoi à la liste
+        # Ajout du tournoi à la liste des tournois
         self.tournaments.append(new_tournament)
+
+        # Sauvegarde des tournois dans un fichier JSON
         self.save_tournaments_to_json()
-        self.MenuView.display_message(f"Le nouveau tournoi {new_tournament.name} a été ajouté avec succès.")
+
+        # Message de confirmation pour l'utilisateur
+        self.MenuView.display_message(f"Le nouveau tournoi '{new_tournament.name}' a été ajouté avec succès.")
 
     def load_players_from_candidates(self, filename="players_candidates.json"):
         """
@@ -148,14 +167,6 @@ class TournamentController:
             else:
                 MenuView.display_message("Invalid number. Please try again.")
 
-        # Sauvegarder les joueurs dans un fichier spécifique au tournoi
-        tournament_filename = f"{self.selected_tournament.name.replace(' ', '_')}_players.json"
-        JSONManager.save_to_file(
-            {"players": self.selected_tournament.players},
-            tournament_filename
-        )
-        MenuView.display_message(f"Players saved to {tournament_filename}.")
-
     @staticmethod
     def generate_pairs(players):
         """
@@ -168,19 +179,19 @@ class TournamentController:
         # Mélanger et générer des paires
         random.shuffle(players)
         pairs = [(players[i], players[i + 1]) for i in range(0, len(players) - 1, 2)]
-
         return pairs
 
     def playing_4_rounds(self):
         # Play 4 rounds of the tournament.
         if not self.selected_tournament:
-            MenuView.display_message("Erreur : Aucun tournoi sélectionné.")
+            MenuView.display_message("Error : No tournament has selected.")
             return
         if len(self.selected_tournament.players) < 8:
             print("Error: A tournament requires at least 8 players.")
-
+            return
         for i in range(1, 5):
             print(f"\n=== Round {i} ===")
+            # Créez l'instance de Round avec tous les paramètres nécessaires
             round_instance = Round(i)
             pairs = self.generate_pairs(self.selected_tournament.players)
 
@@ -209,6 +220,19 @@ class TournamentController:
             # Afficher un message si le numéro est invalide
             MenuView.display_message("invalid number.\n")
 
+    @staticmethod
+    def save_ranking_to_json(tournament, filename):
+        if not tournament:
+            print("No tournament selected for saving ranking.")
+            return
+        try:
+            ranking = []
+            # Enregistrer le classement dans un fichier JSON
+            with open(filename, "w", encoding="utf-8") as file:
+                json.dump({"ranking": ranking}, file, indent=4, ensure_ascii=False)
+        except Exception as e:
+            print(f"An error occurred while saving the ranking: {e}")
+
     def display_and_save_players_ranking(self):
         """
         Affiche le classement des joueurs pour le tournoi sélectionné
@@ -223,26 +247,30 @@ class TournamentController:
             return
 
         # Trier les joueurs par score décroissant
-        sorted_players = sorted(self.selected_tournament.players, key=lambda player: player['score'], reverse=True)
-
+        sorted_players = sorted(
+            self.selected_tournament.players,
+            key=lambda player: player['score'],  # Assurez-vous que player.score est utilisé ici
+            reverse=True
+        )
+        for player in sorted_players:
+            print("the finals score are:", (player['score']))
         # Afficher le classement
         MenuView.display_players_ranking(sorted_players)
-
-        # Sauvegarder le classement dans un fichier JSON
-        ranking_filename = f"{self.selected_tournament.name.replace(' ', '_')}_ranking.json"
-        JSONManager.save_to_file({"ranking": sorted_players}, ranking_filename)
-        print(f"Le classement des joueurs a été sauvegardé dans le fichier '{ranking_filename}'.")
+        self.save_tournaments_to_json()
 
     def details_all_tournaments_rounds_and_matchs(self):
         """
-        Generates a detailed report of all tournaments, rounds, and matches, allowing the user to choose a tournament.
+        Generates a detailed report of all tournaments, rounds, and matchs,
+        and saves the updated details in the JSON file.
         """
         if not self.tournaments:
-            MenuView.display_message("No tournaments available.")
+            MenuView.display_message("No tournaments played.")
             return
-        MenuView.display_message("\n=== List of Tournaments ===")
         if self.selected_tournament:
+            MenuView.display_message("\n=== List of Tournaments ===")
             MenuView.disply_all_details_rounds_and_matchs(self.tournaments)
+            # Sauvegarde des détails des tournois dans le fichier JSON
+            self.save_tournaments_to_json()
         else:
             return MenuView.afficher_menu_principal()
 
@@ -267,7 +295,6 @@ class TournamentController:
 
             # Selection of tournament choice
             selected_tournament = self.tournaments[tournament_choice - 1]
-
             # Verified ifdes players are present in the tournament
             if selected_tournament.players:
                 MenuView.display_message(
