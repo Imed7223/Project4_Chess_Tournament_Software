@@ -159,7 +159,8 @@ class TournamentController:
         MenuView.display_players_candidates(self.players_candidates)
 
         while len(self.selected_tournament.players) < 8:
-            choice = MenuView.get_player_number(len(self.selected_tournament.players) + 1, len(self.players_candidates))
+            choice = MenuView.get_player_number(len(self.selected_tournament.players) + 1,
+                                                len(self.players_candidates))
             if 0 <= choice < len(self.players_candidates):
                 player = self.players_candidates.pop(choice)
                 self.selected_tournament.players.append(player)
