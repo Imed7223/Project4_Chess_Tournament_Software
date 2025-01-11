@@ -14,24 +14,23 @@ def run():
         if choice == "1":
             controller.add_new_tournament()
         elif choice == "2":
-            controller.selected_tournaments()
+            controller.select_a_tournament()
         elif choice == "3":
             controller.selected_players()
         elif choice == "4":
             controller.playing_4_rounds()
         elif choice == "5":
-            controller.ordered_candidates_players_list()
-        elif choice == "6":
-            controller.display_tournaments()
-        elif choice == "7":
             controller.selected_tournament_details()
-        elif choice == "8":
-            controller.ordered_all_tournament_players_list()
-        elif choice == "9":
+        elif choice == "6":
             controller.details_all_tournaments_rounds_and_matchs()
-
-        elif choice == "10":
+        elif choice == "7":
             controller.display_and_save_players_ranking()
+        elif choice == "8":
+            controller.ordered_candidates_players_list()
+        elif choice == "9":
+            controller.ordered_all_tournament_players_list()
+        elif choice == "10":
+            controller.display_tournaments()
         elif choice == "11":
             MenuView.display_message("Bye !")
             break

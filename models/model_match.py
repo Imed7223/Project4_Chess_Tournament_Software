@@ -25,3 +25,12 @@ class Match:
             "score_playerA": self.score_playerA,
             "score_playerB": self.score_playerB,
         }
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            playerA=data["playerA"],
+            playerB=data["playerB"],
+            score_playerA=data.get("score_playerA", 0.0),
+            score_playerB=data.get("score_playerB", 0.0)
+        )

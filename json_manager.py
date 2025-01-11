@@ -10,7 +10,6 @@ class JSONManager:
         try:
             with open(filename, "w", encoding="utf-8") as file:
                 json.dump(data, file, indent=4, ensure_ascii=False, default=str)
-            print(f"Les données ont été sauvegardées dans le fichier {filename}.")
         except Exception as e:
             print(f"Erreur lors de la sauvegarde dans le fichier {filename} : {e}")
 
@@ -22,7 +21,6 @@ class JSONManager:
         try:
             with open(filename, "r", encoding="utf-8") as file:
                 data = json.load(file)
-            print(f"Les données ont été chargées depuis le fichier {filename}.")
             return data
         except FileNotFoundError:
             print(f"Le fichier {filename} n'existe pas.")

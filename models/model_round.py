@@ -1,4 +1,5 @@
 from datetime import datetime
+from models.model_match import Match
 
 
 class Round:
@@ -33,3 +34,17 @@ class Round:
             else None,
             "end": self.end,
         }
+
+    @classmethod
+    def from_dict(cls, data):
+        matchs = [Match.from_dict(match) if isinstance(match, dict) else match for match in data.get("matchs", [])]
+        beginning = datetime.strptime(data["beginning"], "%Y-%m-%d %H:%M:%S") if data.get("beginning") else None
+        end = datetime.strptime(data["end"], "%Y-%m-%d %H:%M:%S") if data.get("end") else None
+        instance = cls(
+            number=data["number"],
+            matchs=matchs,
+            beginning=beginning
+        )
+        if end:
+            instance.end = end
+        return instance

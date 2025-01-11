@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c3627ca-2aed-49df-a1b1-a7e9b6237ad8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.flake8" beforeDir="false" afterPath="$PROJECT_DIR$/.flake8" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/controller_tournament.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/controller_tournament.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flake8-report/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/flake8-report/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/controller_tournament.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/json_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/model_match.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_match.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/model_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/model_round.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_round.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/model_tournament.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_tournament.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/players_candidates.json" beforeDir="false" afterPath="$PROJECT_DIR$/players_candidates.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tournaments.json" beforeDir="false" afterPath="$PROJECT_DIR$/tournaments.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +32,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/controllers/controller_tournament.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -49,10 +60,15 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lénovo P70/Pictures/pret_project_python&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lénovo P70/Desktop/pret_project_python&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.debugger.python&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lénovo P70\Pictures\pret_project_python\flake8-report" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -107,8 +123,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.python main.py" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.python main.py" />
       </list>
     </recent_temporary>
   </component>

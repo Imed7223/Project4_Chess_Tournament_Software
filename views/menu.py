@@ -1,6 +1,7 @@
 import random
 from models.model_match import Match
 from datetime import datetime
+from models.model_player import Player
 
 
 class MenuView:
@@ -8,16 +9,16 @@ class MenuView:
     def afficher_menu_principal():
         return (
             "\n=== Main Menu ===\n"
-            "1. Add a new tournament \n"
-            "2. Selected tournaments\n"
-            "3. Selected players\n"
-            "4. start plying 4 rounds \n"
-            "5. list of all candidates players in alphabetical order \n"
-            "6. Displaying available tournaments \n"
-            "7. selected tournament details \n"
-            "8. list of all tournament players in alphabetical order \n"
-            "9.details of all rounds and matchs and ranking players in tournaments \n"
-            "10. controller.display_and_save_players_ranking() \n"
+            "1. Add new tournament \n"
+            "2. Selecte a tournament\n"
+            "3. Add players to selected tournament\n"
+            "4. Play 4 rounds on selected tournament \n"
+            "5. Display detail of selected tournament \n"
+            "6. Detail of all rounds on selected tournament \n"
+            "7. Ranking of players on selected tournament \n"
+            "8. list of all candidates players in alphabetical order \n"
+            "9.list of all tournament players in alphabetical order \n"
+            "10. Display all tournaments \n"
             "11. Exit"
         )
 
@@ -87,15 +88,61 @@ class MenuView:
         """
         Displaying list of selected players.
         """
-        print("\n=== List of selected players ===")
-        for i, player in enumerate(players):
-            print(f"{i + 1}. {player['firstName']} {player['lastName']} (ID: {player['national_id']})")
+        if not players:
+            print("Aucun joueur sélectionné.", flush=True)
+            return
+
+        print("\n=== Liste des joueurs sélectionnés ===")
+        for i, player in enumerate(players, start=1):
+            # Vérifier si le joueur est un dictionnaire ou une instance de Player
+            if isinstance(player, dict):
+                # Si c'est un dictionnaire, accéder aux clés
+                print(f"{i}. {player['firstName']} {player['lastName']} (ID: {player['national_id']})")
+            elif isinstance(player, Player):
+                # Si c'est une instance de Player, utiliser la notation pointée
+                print(f"{i}. {player.firstName} {player.lastName} (ID: {player.national_id})")
+            else:
+                print(f"{i}. Type de joueur non reconnu : {type(player)}")
 
     @staticmethod
-    def generate_pairs(players):
-        """Génère des paires aléatoires."""
-        random.shuffle(players)
-        pairs = [(players[i], players[i + 1]) for i in range(0, len(players), 2)]
+    def generate_pairs(players, previous_pairs=None):
+        """
+        Génère des paires de joueurs en fonction de leurs scores et évite les matchs répétés.
+        :param players: Liste des joueurs.
+        :param previous_pairs: Liste des paires précédentes pour éviter les répétitions.
+        :return: Liste des paires de joueurs.
+        """
+        if len(players) < 2:
+            print("Pas assez de joueurs pour générer des paires.")
+            return []
+
+        # Si c'est le premier tour, mélanger les joueurs aléatoirement
+        if not previous_pairs:
+            random.shuffle(players)
+        else:
+            # Trier les joueurs par score (du plus élevé au plus bas)
+            players.sort(key=lambda player: player.score, reverse=True)
+
+        pairs = []
+        used_players = set()  # Pour éviter les répétitions
+
+        for i in range(0, len(players), 2):
+            playerA = players[i]
+            playerB = players[i + 1] if i + 1 < len(players) else None
+
+            # Vérifier si les joueurs ont déjà joué ensemble
+            if previous_pairs:
+                for pair in previous_pairs:
+                    if (playerA in pair and playerB in pair):
+                        # Si les joueurs ont déjà joué ensemble, chercher un autre joueur
+                        for j in range(i + 2, len(players)):
+                            if players[j] not in used_players and (playerA, players[j]) not in previous_pairs:
+                                playerB = players[j]
+                                break
+            if playerB:
+                pairs.append((playerA, playerB))
+                used_players.add(playerA)
+                used_players.add(playerB)
         return pairs
 
     @staticmethod
@@ -103,11 +150,14 @@ class MenuView:
         """
         Displays the list of players in descending order of their scores.
         """
+        if not players:
+            print("No players to display.", flush=True)
+            return
         print("=== Ranking of players ===: \
                 \nTournament result :")
-
         for player in players:
-            print(f"- {player['firstName']} {player['lastName']} (Score : {player['score']})")
+            # Utiliser la notation pointée pour accéder aux attributs de l'objet Player
+            print(f"{player.firstName} {player.lastName} (Score : {player.score})", flush=True)
 
     @staticmethod
     def ordered_candidates_players_list(players_candidates):
@@ -214,14 +264,13 @@ class MenuView:
                         print("Error: Invalid score combination. Please try again.")
                         continue
                     valid_scores = True  # Exit loop if inputs are valid
-
                 except ValueError:
                     print("Error: Invalid input. Please enter a numeric score (0, 0.5, or 1).")
-
             # If valid scores are entered, proceed
             match = Match(playerA, playerB)
             match.save_result(score1, score2, score=None)
             round_instance.matchs.append(match)
+            # Mettre à jour les scores des joueurs
             playerA["score"] += score1
             playerB["score"] += score2
             if score1 > score2:
