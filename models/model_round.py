@@ -5,8 +5,8 @@ from models.model_match import Match
 class Round:
     def __init__(self, number: int, matchs=None, beginning=None):
         self.number = number
-        self.beginning = datetime.now() if not beginning else beginning
-        self.end = datetime.now()
+        self.beginning = datetime.now() if beginning is None else beginning
+        self.end = None
         self.matchs = matchs if matchs else []
 
     def finished(self):
@@ -28,23 +28,37 @@ class Round:
     def to_dict(self):
         return {
             "number": self.number,
-            "matchs": [match.to_dict() if hasattr(match, 'to_dict') else match for match in self.matchs],
-            "beginning": self.beginning
-            if self.beginning
-            else None,
-            "end": self.end,
+            "matchs": [
+                match.to_dict() if hasattr(match, "to_dict") else match
+                for match in self.matchs
+            ],
+            "beginning": (
+                self.beginning.strftime("%Y-%m-%d %H:%M:%S")
+                if isinstance(self.beginning, datetime)
+                else self.beginning
+            ),
+            "end": (
+                self.end.strftime("%Y-%m-%d %H:%M:%S")
+                if isinstance(self.end, datetime)
+                else self.end
+            ),
         }
 
     @classmethod
     def from_dict(cls, data):
-        matchs = [Match.from_dict(match) if isinstance(match, dict) else match for match in data.get("matchs", [])]
-        beginning = datetime.strptime(data["beginning"], "%Y-%m-%d %H:%M:%S") if data.get("beginning") else None
-        end = datetime.strptime(data["end"], "%Y-%m-%d %H:%M:%S") if data.get("end") else None
-        instance = cls(
-            number=data["number"],
-            matchs=matchs,
-            beginning=beginning
+        matchs = [Match.from_dict(m) for m in data.get("matchs", [])]
+        # Conversion des chaînes en objets datetime
+        beginning = (
+            datetime.strptime(data["beginning"], "%Y-%m-%d %H:%M:%S")
+            if data.get("beginning")
+            else None
         )
-        if end:
-            instance.end = end
-        return instance
+        end = (
+            datetime.strptime(data["end"], "%Y-%m-%d %H:%M:%S")
+            if data.get("end")
+            else None
+        )
+        # Création de l'objet Round
+        obj = cls(number=data["number"], matchs=matchs, beginning=beginning)
+        obj.end = end
+        return obj

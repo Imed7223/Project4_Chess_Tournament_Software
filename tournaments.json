@@ -1,47 +1,38 @@
 {
     "tournaments": [
         {
-            "name": "Tournoi National",
-            "place": "Grenoble",
-            "beginning_date": "23/11/2022",
-            "end_date": "25/11/2022",
-            "description": "Excellent tournoi organisé pour tous les niveaux.",
-            "players": [],
-            "rounds": []
-        },
-        {
-            "name": "Tournoi Paris",
-            "place": "Paris",
-            "beginning_date": "23/11/2022",
-            "end_date": "25/11/2022",
-            "description": "Un événement prestigieux dans la capitale française.",
-            "players": [],
-            "rounds": []
-        },
-        {
-            "name": "Tournoi Amical",
-            "place": "Bordeaux",
+            "name": "dsde",
+            "place": "dsff",
             "beginning_date": "20/01/2020",
-            "end_date": "21/01/2020",
-            "description": "Petit tournoi amical pour les joueurs locaux.",
+            "end_date": "10/02/2022",
+            "description": "sdds",
             "players": [],
             "rounds": []
         },
         {
-            "name": "Tournoi de Printemps",
-            "place": "Marseille",
-            "beginning_date": "20/02/2021",
-            "end_date": "21/02/2021",
-            "description": "Un tournoi ensoleillé au bord de la mer.",
-            "players": [],
-            "rounds": []
-        },
-        {
-            "name": "Open d'Hiver",
-            "place": "Lille",
+            "name": "dsdsq",
+            "place": "fdfds",
             "beginning_date": "20/01/2020",
-            "end_date": "21/01/2020",
-            "description": "Tournoi hivernal pour les passionnés d'échecs.",
+            "end_date": "10/02/2024",
+            "description": "dd",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "ddsf",
+            "place": "fdfds",
+            "beginning_date": "20/01/2020",
+            "end_date": "10/02/2021",
+            "description": "dede",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "sdds",
+            "place": "dds",
+            "beginning_date": "20/01/2020",
+            "end_date": "10/02/2020",
+            "description": "dsds",
             "players": [],
             "rounds": []
         }

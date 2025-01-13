@@ -55,7 +55,7 @@ class MenuView:
             return
         print("\n=== List of candidate players ===")
         for i, player in enumerate(players_candidates):
-            print(f"{i + 1}. {player['lastName']} {player['firstName']}  (ID: {player['national_id']})")
+            print(f"{i + 1}. {player.lastName} {player.firstName}  (ID: {player.national_id})")
 
     @staticmethod
     def get_player_number(current_choice, max_candidates):
@@ -163,7 +163,7 @@ class MenuView:
     def ordered_candidates_players_list(players_candidates):
         print("\n● list of all candidate players in alphabetical order :")
         for player in players_candidates:
-            print(f"- {player['lastName']} {player['firstName']} (ID : {player['birth_date']})")
+            print(f"- {player.lastName} {player.firstName} (ID : {player.birth_date})")
 
     @staticmethod
     def add_new_tournament():
@@ -233,17 +233,17 @@ class MenuView:
                                             \n(score_playerB == 1 and score_playerA != 0) or \
                                             \n(score_playerA == 0 and score_playerB == 0) or \
                                             \n(score_playerA == 0.5 and score_playerB != 0.5)")"""
-            print(f"Match / between: \n*****{playerA["firstName"]} {playerA["lastName"]} {playerA["national_id"]} <= "
+            print(f"Match / between: \n*****{playerA.firstName} {playerA.lastName} {playerA.national_id} <= "
                   f"vs =>"
-                  f" {playerB["firstName"]} {playerB["lastName"]} {playerA["national_id"]}*****")
+                  f" {playerB.firstName} {playerB.lastName} {playerA.national_id}*****")
             valid_scores = False
             while not valid_scores:
                 try:
                     score1_input = input(
-                        f"Score of PlayerA: {playerA['firstName']} {playerA['lastName']} |you must choose ("
+                        f"Score of PlayerA: {playerA.firstName} {playerA.lastName} |you must choose ("
                         f"0, 0.5, or 1): ").strip()
                     score2_input = input(
-                        f"Score of PlayerB: {playerB['firstName']} {playerB['lastName']} |you must choose ("
+                        f"Score of PlayerB: {playerB.firstName} {playerB.lastName} |you must choose ("
                         f"0, 0.5, or 1): ").strip()
 
                     # Check if the inputs are empty
@@ -271,12 +271,12 @@ class MenuView:
             match.save_result(score1, score2, score=None)
             round_instance.matchs.append(match)
             # Mettre à jour les scores des joueurs
-            playerA["score"] += score1
-            playerB["score"] += score2
+            playerA.score += score1
+            playerB.score += score2
             if score1 > score2:
-                print(f"Winners : {playerA['firstName']} {playerA['lastName']}")
+                print(f"Winners : {playerA.firstName} {playerA.lastName}")
             elif score2 > score1:
-                print(f"Winners : {playerB['firstName']} {playerB['lastName']}")
+                print(f"Winners : {playerB.firstName} {playerB.lastName}")
             else:
                 print("Draw match")
 
@@ -322,9 +322,9 @@ class MenuView:
                 print("\nMatchs :")
                 for match in round_instance.matchs:
                     print(
-                        f"- {match.playerA['firstName']} {match.playerA['lastName']} "
+                        f"- {match.playerA.firstName} {match.playerA.lastName} "
                         f"(Score: {match.score_playerA}) vs "
-                        f"- {match.playerB['firstName']} {match.playerB['lastName']} "
+                        f"- {match.playerB.firstName} {match.playerB.lastName} "
                         f"(Score: {match.score_playerB})"
                     )
         except ValueError:

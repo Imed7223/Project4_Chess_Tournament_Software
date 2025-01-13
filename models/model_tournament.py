@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from models.model_player import Player
 from models.model_round import Round
 
@@ -13,7 +12,7 @@ class Tournament:
         self.beginning_date = self.parse_date(beginning_date)
 
         # Gestion des différents formats pour end_date
-        self.end_date = self.parse_date(end_date)
+        self.end_date = self.parse_date(end_date) if end_date else None  # Initialisé à None jusqu'à la fin du tournoi
         self.description = description
         self.players = players or []
         self.rounds = rounds or []
@@ -48,20 +47,19 @@ class Tournament:
             "beginning_date": self.beginning_date.strftime('%Y-%m-%d %H:%M:%S'),
             "end_date": self.end_date.strftime('%Y-%m-%d %H:%M:%S'),
             "description": self.description,
-            "players": [player.national_id.to_dict() for player in self.players],
+            "players": [player.to_dict() for player in self.players],
             "rounds": [round.to_dict() for round in self.rounds],
         }
 
     @classmethod
     def from_dict(cls, data):
-        players = [Player.from_dict(player) if isinstance(player, dict) else player for player in
-                   data.get("players", [])]
-        rounds = [Round.from_dict(round) if isinstance(round, dict) else round for round in data.get("rounds", [])]
+        players = [Player.from_dict(p) for p in data["players", []]]
+        rounds = [Round.from_dict(r) for r in data.get("rounds_data", [])]
         return cls(
             name=data["name"],
             place=data["place"],
             beginning_date=data["beginning_date"],
-            end_date=data["end_date"],
+            end_date=data.get("end_date"),  # Utiliser .get() pour éviter les KeyError
             description=data["description"],
             players=players,
             rounds=rounds
