@@ -203,6 +203,7 @@ class TournamentController:
             previous_pairs.extend(pairs)  # Ajouter les paires actuelles à la liste des paires précédentes
             # Jouer les matchs du round
             MenuView.playing_4_rounds(pairs, round_instance, self.selected_tournament)
+            self.save_tournaments_to_json()
             # Ajouter le round au tournoi (uniquement s'il n'est pas déjà présent)
             if round_instance not in self.selected_tournament.rounds:
                 self.selected_tournament.rounds.append(round_instance)
@@ -246,7 +247,7 @@ class TournamentController:
 
     def display_ranking_players(self):
         if not self.selected_tournament:
-            print("No tournament selected.You mast select a tournament from this list\n")
+            MenuView.display_message("No tournament selected.You mast select a tournament from this list\n")
             self.select_a_tournament()
             return
         self.select_a_tournament()
