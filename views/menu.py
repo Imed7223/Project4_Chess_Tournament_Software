@@ -224,15 +224,15 @@ class MenuView:
         print(f"Dates : {tournament.beginning_date.strftime('%d/%m/%Y')} - {tournament.end_date.strftime('%d/%m/%Y')}")
 
     @staticmethod
-    def playing_4_rounds(pairs, round_instance, selected_tournament):
+    def playing_rounds(pairs, round_instance, selected_tournament):
         score1 = score2 = None
-        # Play 4 rounds of the tournament.
+        # Play the rounds of the tournament.
         for playerA, playerB in pairs:
-            """All those combinations are wrongs : \
+            '''All those combinations are wrongs : \
                                           \n(score_playerA == 1 and score_playerB != 0) or \
                                             \n(score_playerB == 1 and score_playerA != 0) or \
                                             \n(score_playerA == 0 and score_playerB == 0) or \
-                                            \n(score_playerA == 0.5 and score_playerB != 0.5)")"""
+                                            \n(score_playerA == 0.5 and score_playerB != 0.5)")'''
             print(f"Match / between: \n*****{playerA.firstName} {playerA.lastName} {playerA.national_id} <= "
                   f"vs =>"
                   f" {playerB.firstName} {playerB.lastName} {playerA.national_id}*****")
@@ -255,12 +255,7 @@ class MenuView:
                     score1 = float(score1_input)
                     score2 = float(score2_input)
                     # Validate scores
-                    if (score1 == 1 and score2 != 0) or \
-                            (score1 == 0 and score2 != 1) or \
-                            (score1 == 0 and score2 == 0) or \
-                            (score1 == 0.5 and score2 != 0.5) or \
-                            (score1 not in [0, 0.5, 1] or score2 not in [0, 0.5, 1]) or \
-                            (0 > score1 > 1 or 0 > score2 > 1):
+                    if score1 + score2 != 1:
                         print("Error: Invalid score combination. Please try again.")
                         continue
                     valid_scores = True  # Exit loop if inputs are valid
@@ -300,7 +295,6 @@ class MenuView:
                       "Please select a valid tournament number.")
                 return
             selected_tournament = tournaments[choice - 1]
-
             # Affichage des détails du tournoi sélectionné
             print(f"\n=== Rapport du tournoi : {selected_tournament.name} ===")
             print(f"Lieu : {selected_tournament.place}")
@@ -311,7 +305,6 @@ class MenuView:
             if not selected_tournament.rounds:
                 print("No rounds have been played yet for this tournament.")
                 return
-
             # Affichage des rounds et matchs du tournoi sélectionné
             for round_instance in selected_tournament.rounds:
                 print("\n=== Round Details ===")

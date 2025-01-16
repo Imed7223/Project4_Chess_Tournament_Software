@@ -4,7 +4,7 @@ from models.model_round import Round
 
 
 class Tournament:
-    def __init__(self, name, place, beginning_date, end_date, description,
+    def __init__(self, name, place, beginning_date, end_date, description, number_of_rounds=4,
                  generate_pairs=None, players=None, selected_tournament=None, rounds=None):
         self.name = name
         self.place = place
@@ -14,6 +14,7 @@ class Tournament:
         # Gestion des différents formats pour end_date
         self.end_date = self.parse_date(end_date) if end_date else None  # Initialisé à None jusqu'à la fin du tournoi
         self.description = description
+        self.number_of_rounds = number_of_rounds
         self.players = players or []
         self.rounds = rounds or []
         self.selected_tournament = selected_tournament or []

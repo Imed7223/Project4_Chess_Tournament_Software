@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1c3627ca-2aed-49df-a1b1-a7e9b6237ad8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cause du problème instance.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/controller_tournament.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/controller_tournament.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/model_match.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_match.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/model_round.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_round.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/model_tournament.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_tournament.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tournaments.json" beforeDir="false" afterPath="$PROJECT_DIR$/tournaments.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.py" afterDir="false" />
@@ -47,20 +44,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.controller_tournament.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.menu.executor&quot;: &quot;Run&quot;,
-    &quot;Python.model_tournament.executor&quot;: &quot;Run&quot;,
-    &quot;Python.python main.py.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/pret_project_python&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.debugger.python&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.controller_tournament.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.menu.executor": "Run",
+    "Python.model_tournament.executor": "Run",
+    "Python.python main.py.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Lénovo P70/Pictures",
+    "settings.editor.selected.configurable": "reference.idesettings.debugger.python"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Lénovo P70\Pictures\pret_project_python\flake8-report" />

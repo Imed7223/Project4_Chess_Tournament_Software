@@ -24,6 +24,8 @@ class TournamentController:
                     "beginning_date": tournament.beginning_date.strftime("%d/%m/%Y"),
                     "end_date": tournament.end_date.strftime("%d/%m/%Y"),
                     "description": tournament.description,
+                    "number_of_rounds": tournament.number_of_rounds,
+
                     "players": [
                         # Vérifier le type de player
                         player.to_dict()
@@ -73,6 +75,7 @@ class TournamentController:
                         beginning_date=tournament_data["beginning_date"],
                         end_date=tournament_data["end_date"],
                         description=tournament_data["description"],
+                        number_of_rounds=tournament_data.get("number_of_rounds", 4),
                         players=players,
                         rounds=rounds
                     )
@@ -180,7 +183,7 @@ class TournamentController:
         pairs = [(players[i], players[i + 1]) for i in range(0, len(players) - 1, 2)]
         return pairs
 
-    def playing_4_rounds(self):
+    def playing_rounds(self):
         """
         Joue 4 rounds du tournoi en générant des paires et en mettant à jour les scores.
         """
@@ -202,7 +205,8 @@ class TournamentController:
             pairs = self.generate_pairs(self.selected_tournament.players, previous_pairs)
             previous_pairs.extend(pairs)  # Ajouter les paires actuelles à la liste des paires précédentes
             # Jouer les matchs du round
-            MenuView.playing_4_rounds(pairs, round_instance, self.selected_tournament)
+            MenuView.playing_rounds(pairs, round_instance, self.selected_tournament)
+            self.save_tournaments_to_json()
             # Ajouter le round au tournoi (uniquement s'il n'est pas déjà présent)
             if round_instance not in self.selected_tournament.rounds:
                 self.selected_tournament.rounds.append(round_instance)
@@ -246,7 +250,7 @@ class TournamentController:
 
     def display_ranking_players(self):
         if not self.selected_tournament:
-            print("No tournament selected.You mast select a tournament from this list\n")
+            MenuView.display_message("No tournament selected.You mast select a tournament from this list\n")
             self.select_a_tournament()
             return
         self.select_a_tournament()
