@@ -30,7 +30,7 @@ class Match:
         }
 
     @classmethod
-    def from_dict(cls, data):
+    def from_dict(cls, data: dict):
         return cls(
             playerA=Player.from_dict(data["playerA"]),
             playerB=Player.from_dict(data["playerB"]),

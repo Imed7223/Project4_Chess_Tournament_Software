@@ -250,7 +250,6 @@ class MenuView:
                     if not score1_input or not score2_input:
                         print("Error: Empty score is invalid. Please try again.")
                         continue
-
                     # Convert inputs to float
                     score1 = float(score1_input)
                     score2 = float(score2_input)

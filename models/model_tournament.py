@@ -12,7 +12,7 @@ class Tournament:
         self.beginning_date = self.parse_date(beginning_date)
 
         # Gestion des différents formats pour end_date
-        self.end_date = self.parse_date(end_date) if end_date else None  # Initialisé à None jusqu'à la fin du tournoi
+        self.end_date = self.parse_date(end_date)
         self.description = description
         self.number_of_rounds = number_of_rounds
         self.players = players or []
