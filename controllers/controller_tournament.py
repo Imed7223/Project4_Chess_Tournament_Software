@@ -205,7 +205,11 @@ class TournamentController:
             pairs = self.generate_pairs(self.selected_tournament.players, previous_pairs)
             previous_pairs.extend(pairs)  # Ajouter les paires actuelles à la liste des paires précédentes
             # Jouer les matchs du round
+<<<<<<< HEAD
             MenuView.playing_rounds(pairs, round_instance, self.selected_tournament)
+=======
+            MenuView.playing_4_rounds(pairs, round_instance, self.selected_tournament)
+>>>>>>> dca9dd06d083ca5afc3aa4c3298cbd27cba1225e
             self.save_tournaments_to_json()
             # Ajouter le round au tournoi (uniquement s'il n'est pas déjà présent)
             if round_instance not in self.selected_tournament.rounds:

@@ -8,7 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/controller_tournament.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/controller_tournament.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/models/model_tournament.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/model_tournament.py" afterDir="false" />
+=======
+>>>>>>> dca9dd06d083ca5afc3aa4c3298cbd27cba1225e
       <change beforePath="$PROJECT_DIR$/tournaments.json" beforeDir="false" afterPath="$PROJECT_DIR$/tournaments.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.py" afterDir="false" />
     </list>

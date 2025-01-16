@@ -1,3 +1,81 @@
 {
+<<<<<<< HEAD
     "tournaments": []
 }
+=======
+    "tournaments": [
+        {
+            "name": "dsde",
+            "place": "dsff",
+            "beginning_date": "20/01/2020",
+            "end_date": "10/02/2022",
+            "description": "sdds",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "dsdsq",
+            "place": "fdfds",
+            "beginning_date": "20/01/2020",
+            "end_date": "10/02/2024",
+            "description": "dd",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "ddsf",
+            "place": "fdfds",
+            "beginning_date": "20/01/2020",
+            "end_date": "10/02/2021",
+            "description": "dede",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "sdds",
+            "place": "dds",
+            "beginning_date": "20/01/2020",
+            "end_date": "10/02/2020",
+            "description": "dsds",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "jjh",
+            "place": "kjj",
+            "beginning_date": "20/01/2020",
+            "end_date": "10/02/2020",
+            "description": "nbb",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "xc",
+            "place": "dsds",
+            "beginning_date": "10/02/2020",
+            "end_date": "10/02/2023",
+            "description": "sdsd",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "dsds",
+            "place": "dsdsds",
+            "beginning_date": "20/02/2020",
+            "end_date": "10/02/2025",
+            "description": "dsds",
+            "players": [],
+            "rounds": []
+        },
+        {
+            "name": "dfd",
+            "place": "fdfd",
+            "beginning_date": "20/01/2020",
+            "end_date": "10/03/2023",
+            "description": "fdfd",
+            "players": [],
+            "rounds": []
+        }
+    ]
+}
+>>>>>>> dca9dd06d083ca5afc3aa4c3298cbd27cba1225e

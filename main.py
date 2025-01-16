@@ -12,13 +12,21 @@ def run():
         choice = MenuView.get_choice()
         if choice == "1":
             controller.add_new_tournament()
+<<<<<<< HEAD
+=======
+            
+>>>>>>> dca9dd06d083ca5afc3aa4c3298cbd27cba1225e
         elif choice == "2":
             controller.select_a_tournament()
         elif choice == "3":
             controller.selected_players()
             controller.save_tournaments_to_json()
         elif choice == "4":
+<<<<<<< HEAD
             controller.playing_rounds()
+=======
+            controller.playing_4_rounds()
+>>>>>>> dca9dd06d083ca5afc3aa4c3298cbd27cba1225e
             controller.save_tournaments_to_json()
         elif choice == "5":
             controller.selected_tournament_details()
