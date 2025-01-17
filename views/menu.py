@@ -123,6 +123,23 @@ class MenuView:
             # Trier les joueurs par score (du plus élevé au plus bas)
             players.sort(key=lambda player: player.score, reverse=True)
 
+            # Randomiser l'ordre des joueurs ayant le même score
+            i = 0
+            while i < len(players) - 1:
+                j = i
+                # Trouver tous les joueurs ayant le même score
+                while j < len(players) - 1 and players[j].score == players[j + 1].score:
+                    j += 1
+                # Si plusieurs joueurs ont le même score, randomiser leur ordre
+                if j > i:
+                    # Extraire la sous-liste des joueurs ayant le même score
+                    same_score_players = players[i:j + 1]
+                    # Randomiser l'ordre de cette sous-liste
+                    random.shuffle(same_score_players)
+                    # Remplacer la sous-liste dans la liste principale
+                    players[i:j + 1] = same_score_players
+                i = j + 1
+
         pairs = []
         used_players = set()  # Pour éviter les répétitions
 
