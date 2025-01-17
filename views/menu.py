@@ -12,7 +12,7 @@ class MenuView:
             "1. Add new tournament \n"
             "2. Selecte a tournament\n"
             "3. Add players to selected tournament\n"
-            "4. Play 4 rounds on selected tournament \n"
+            "4. Play  rounds on selected tournament \n"
             "5. Display detail of selected tournament \n"
             "6. Detail of all rounds on selected tournament \n"
             "7. Ranking of players on selected tournament \n"
