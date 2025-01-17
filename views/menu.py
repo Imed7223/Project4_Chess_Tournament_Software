@@ -2,6 +2,7 @@ import random
 from models.model_match import Match
 from datetime import datetime
 from models.model_player import Player
+from tabulate import tabulate
 
 
 class MenuView:
@@ -74,14 +75,6 @@ class MenuView:
                     print("Invalid number. Please try again.")
             except ValueError:
                 print("Please enter a valid number.")
-
-    @staticmethod
-    def view_message(message):
-        """
-        Affiche un message à l'utilisateur.
-        :param message: Message à afficher.
-        """
-        print(message)
 
     @staticmethod
     def display_selected_players(players):
@@ -244,25 +237,39 @@ class MenuView:
     def playing_rounds(pairs, round_instance, selected_tournament):
         score1 = score2 = None
         # Play the rounds of the tournament.
+        print(f"\n=== Pairs of players for {round_instance}===")
+        """
+           Affiche les paires de joueurs dans un tableau.
+           :param pairs: Liste des paires de joueurs.
+           """
+        # Préparer les données pour le tableau
+        table_data = []
+        for i, (playerA, playerB) in enumerate(pairs, start=1):
+            table_data.append([f"Pairs {i}", f"{playerA.firstName} {playerA.lastName} {playerA.score}", "vs",
+                               f"{playerB.firstName} {playerB.lastName} {playerB.score}"])
+        # Afficher le tableau
+        print(tabulate(table_data, headers=["Pairs", "PlayerA", "vs", "PlayerB"], tablefmt="pretty"))
+        print()
         for playerA, playerB in pairs:
             '''All those combinations are wrongs : \
                                           \n(score_playerA == 1 and score_playerB != 0) or \
                                             \n(score_playerB == 1 and score_playerA != 0) or \
                                             \n(score_playerA == 0 and score_playerB == 0) or \
                                             \n(score_playerA == 0.5 and score_playerB != 0.5)")'''
-            print(f"Match / between: \n*****{playerA.firstName} {playerA.lastName} {playerA.national_id} <= "
-                  f"vs =>"
-                  f" {playerB.firstName} {playerB.lastName} {playerA.national_id}*****")
+            print(f"{round_instance}")
+            print(f" *** Give a score and the winner of the Match *** ")
+            print()
             valid_scores = False
             while not valid_scores:
                 try:
                     score1_input = input(
-                        f"Score of PlayerA: {playerA.firstName} {playerA.lastName} |you must choose ("
+                        f"Score of PlayerA: "
+                        f"{playerA.firstName} {playerA.lastName} |you must choose ("
                         f"0, 0.5, or 1): ").strip()
                     score2_input = input(
-                        f"Score of PlayerB: {playerB.firstName} {playerB.lastName} |you must choose ("
+                        f"Score of PlayerB: "
+                        f"{playerB.firstName} {playerB.lastName} |you must choose ("
                         f"0, 0.5, or 1): ").strip()
-
                     # Check if the inputs are empty
                     if not score1_input or not score2_input:
                         print("Error: Empty score is invalid. Please try again.")
@@ -279,22 +286,20 @@ class MenuView:
                     print("Error: Invalid input. Please enter a numeric score (0, 0.5, or 1).")
             # If valid scores are entered, proceed
             match = Match(playerA, playerB)
-            match.save_result(score1, score2, score=None)
+            match.save_result(score1, score2)
             round_instance.matchs.append(match)
             # Mettre à jour les scores des joueurs
             playerA.score += score1
             playerB.score += score2
             if score1 > score2:
-                print(f"Winners : {playerA.firstName} {playerA.lastName}")
+                print(f" *** Winners *** : {playerA.firstName} {playerA.lastName}")
             elif score2 > score1:
-                print(f"Winners : {playerB.firstName} {playerB.lastName}")
+                print(f" *** Winners *** : {playerB.firstName} {playerB.lastName}")
             else:
                 print("Draw match")
-
         round_instance.finished()
         selected_tournament.rounds.append(round_instance)
         print(round_instance)
-
     @staticmethod
     def disply_all_details_rounds_and_matchs(tournaments, sorted_players=None):
         for index, tournament in enumerate(tournaments, 1):
@@ -327,7 +332,7 @@ class MenuView:
                 print(f"\nRound {round_instance.number}")
                 print(f"Beginning : {round_instance.beginning}")
                 print(f"End : {round_instance.end}")
-                f"- {round_instance.end if round_instance.end else 'Not finished'}"
+                f"- {round_instance.end }"
                 print("\nMatchs :")
                 for match in round_instance.matchs:
                     print(

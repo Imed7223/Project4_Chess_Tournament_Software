@@ -200,7 +200,8 @@ class TournamentController:
         for i in range(1, self.selected_tournament.number_of_rounds + 1):
             print(f"\n=== Round {i} ===")
             # Créer une instance de Round
-            round_instance = Round(number=f"Round {i}")
+            round_instance = Round(number=f"{i}")
+
             # Générer des paires en fonction des scores et éviter les répétitions
             pairs = self.generate_pairs(self.selected_tournament.players, previous_pairs)
             previous_pairs.extend(pairs)  # Ajouter les paires actuelles à la liste des paires précédentes

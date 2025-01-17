@@ -1,7 +1,6 @@
 from datetime import datetime
 from models.model_match import Match
 
-
 class Round:
     def __init__(self, number: int, matchs=None, beginning=None):
         self.number = number
@@ -9,8 +8,15 @@ class Round:
         self.end = None
         self.matchs = matchs if matchs else []
 
+    def all_matches_completed(self):
+        """Check if all matches in the round have results."""
+        return all(match.result is not None for match in self.matchs)
+
     def finished(self):
-        self.end = datetime.now()
+        if self.all_matches_completed():
+            self.end = datetime.now()
+        else:
+            raise ValueError("Cannot finish round: not all matches are completed.")
 
     def __repr__(self):
         beginning_str = (
@@ -21,7 +27,7 @@ class Round:
         end_str = (
             self.end.strftime("%Y-%m-%d %H:%M:%S")
             if self.end
-            else "Not finished"
+            else ""
         )
         return f"Round {self.number} - Beginning: {beginning_str}, End: {end_str}, Matchs: {len(self.matchs)}"
 
@@ -40,14 +46,13 @@ class Round:
             "end": (
                 self.end.strftime("%Y-%m-%d %H:%M:%S")
                 if isinstance(self.end, datetime)
-                else self.end
+                else None
             ),
         }
 
     @classmethod
     def from_dict(cls, data):
         matchs = [Match.from_dict(m) for m in data.get("matchs", [])]
-        # Conversion des chaînes en objets datetime
         beginning = (
             datetime.strptime(data["beginning"], "%Y-%m-%d %H:%M:%S")
             if data.get("beginning")
@@ -58,7 +63,6 @@ class Round:
             if data.get("end")
             else None
         )
-        # Création de l'objet Round
         obj = cls(number=data["number"], matchs=matchs, beginning=beginning)
         obj.end = end
         return obj

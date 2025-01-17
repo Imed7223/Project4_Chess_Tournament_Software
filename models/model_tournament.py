@@ -10,7 +10,6 @@ class Tournament:
         self.place = place
         # Gestion des différents formats pour beginning_date
         self.beginning_date = self.parse_date(beginning_date)
-
         # Gestion des différents formats pour end_date
         self.end_date = self.parse_date(end_date)
         self.description = description
