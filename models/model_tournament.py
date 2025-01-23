@@ -53,8 +53,8 @@ class Tournament:
 
     @classmethod
     def from_dict(cls, data):
-        players = [Player.from_dict(p) for p in data["players", []]]
-        rounds = [Round.from_dict(r) for r in data.get("rounds_data", [])]
+        players = [Player.from_dict(p) for p in data.get("players", [])]
+        rounds = [Round.from_dict(r) for r in data.get("rounds", [])]
         return cls(
             name=data["name"],
             place=data["place"],

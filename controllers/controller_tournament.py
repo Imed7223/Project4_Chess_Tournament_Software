@@ -46,48 +46,12 @@ class TournamentController:
         if data and "tournaments" in data:
             self.tournaments = []
             for tournament_data in data["tournaments"]:
-                # Charger les données des joueurs
-                players = []
-                for player_data in tournament_data.get("players", []):
-                    try:
-                        player = Player.from_dict(player_data)  # Convertir en Player
-                        players.append(player)
-                    except (TypeError, KeyError) as e:
-                        MenuView.display_message(
-                            f"Erreur lors de la création du joueur : {e}. Données : {player_data}")
-                # Trier les joueurs par ordre décroissant de leur score
-                players.sort(key=lambda player: player.score, reverse=True)
-                rounds = []
-                for round_data in tournament_data.get("rounds", []):
-                    # Harmonisation du champ 'matchs' en 'matches'
-                    if 'matchs' in round_data:
-                        round_data['matchs'] = round_data.pop('matchs')
-                    # Suppression du champ 'end' s'il existe
-                    round_data.pop('end', None)
-                    try:
-                        rounds.append(Round(**round_data))
-                    except TypeError as e:
-                        MenuView.display_message(f"Error loading round data: {e}")
-                try:
-                    new_tournament = Tournament(
-                        name=tournament_data["name"],
-                        place=tournament_data["place"],
-                        beginning_date=tournament_data["beginning_date"],
-                        end_date=tournament_data["end_date"],
-                        description=tournament_data["description"],
-                        number_of_rounds=tournament_data.get("number_of_rounds", 4),
-                        players=players,
-                        rounds=rounds
-                    )
-                    self.tournaments.append(new_tournament)
-                except KeyError as e:
-                    MenuView.display_message(f"Missing tournament data key: {e}")
-                except TypeError as e:
-                    MenuView.display_message(f"Error loading tournament data: {e}")
+                tournament_data = Tournament.from_dict(data=tournament_data)
+                self.tournaments.append(tournament_data)
 
     def add_new_tournament(self):
         # Récupération des données du tournoi depuis la vue
-        tournament_data = self.MenuView.add_new_tournament()
+        tournament_data = MenuView.add_new_tournament()
         # Création et initialisation du nouveau tournoi
         new_tournament = Tournament(
             name=tournament_data["name"],
@@ -175,7 +139,7 @@ class TournamentController:
         Génère des paires aléatoires à partir de la liste de joueurs fournie.
         """
         if len(players) < 2:
-            print("Pas assez de joueurs pour générer des paires.")
+            MenuView.display_message("Pas assez de joueurs pour générer des paires.")
             return []
 
         # Mélanger et générer des paires
@@ -198,7 +162,7 @@ class TournamentController:
         MenuView.display_message(f"start play 4 rounds of: 'Tournament': {self.selected_tournament.name}")
         previous_pairs = []  # Pour stocker les paires précédentes
         for i in range(1, self.selected_tournament.number_of_rounds + 1):
-            print(f"\n=== Round {i} ===")
+            MenuView.display_message(f"\n=== Round {i} ===")
             # Créer une instance de Round
             round_instance = Round(number=f"{i}")
 

@@ -11,14 +11,14 @@ class MenuView:
         return (
             "\n=== Main Menu ===\n"
             "1. Add new tournament \n"
-            "2. Selecte a tournament\n"
+            "2. Selecte tournament\n"
             "3. Add players to selected tournament\n"
-            "4. Play  rounds on selected tournament \n"
+            "4. Play rounds on selected tournament \n"
             "5. Display detail of selected tournament \n"
             "6. Detail of all rounds on selected tournament \n"
             "7. Ranking of players on selected tournament \n"
             "8. list of all candidates players in alphabetical order \n"
-            "9.list of all tournament players in alphabetical order \n"
+            "9. list of all tournament players in alphabetical order \n"
             "10. Display all tournaments \n"
             "11. Exit"
         )
@@ -109,42 +109,30 @@ class MenuView:
             print("Pas assez de joueurs pour générer des paires.")
             return []
 
-        # Si c'est le premier tour, mélanger les joueurs aléatoirement
-        if not previous_pairs:
-            random.shuffle(players)
-        else:
-            # Trier les joueurs par score (du plus élevé au plus bas)
-            players.sort(key=lambda player: player.score, reverse=True)
+        # Trier les joueurs par score (du plus élevé au plus bas)
+        players.sort(key=lambda player: player.score, reverse=True)
 
-            # Randomiser l'ordre des joueurs ayant le même score
-            i = 0
-            while i < len(players) - 1:
-                j = i
-                # Trouver tous les joueurs ayant le même score
-                while j < len(players) - 1 and players[j].score == players[j + 1].score:
-                    j += 1
-                # Si plusieurs joueurs ont le même score, randomiser leur ordre
-                if j > i:
-                    # Extraire la sous-liste des joueurs ayant le même score
-                    same_score_players = players[i:j + 1]
-                    # Randomiser l'ordre de cette sous-liste
-                    random.shuffle(same_score_players)
-                    # Remplacer la sous-liste dans la liste principale
-                    players[i:j + 1] = same_score_players
-                i = j + 1
+        # Randomiser les joueurs ayant le même score
+        i = 0
+        while i < len(players) - 1:
+            j = i
+            while j < len(players) - 1 and players[j].score == players[j + 1].score:
+                j += 1
+            if j > i:
+                random.shuffle(players[i:j + 1])
+            i = j + 1
 
         pairs = []
-        used_players = set()  # Pour éviter les répétitions
+        used_players = set()
 
         for i in range(0, len(players), 2):
             playerA = players[i]
             playerB = players[i + 1] if i + 1 < len(players) else None
 
-            # Vérifier si les joueurs ont déjà joué ensemble
-            if previous_pairs:
+            if previous_pairs and playerB:
+                # Éviter les matchs répétés
                 for pair in previous_pairs:
                     if (playerA in pair and playerB in pair):
-                        # Si les joueurs ont déjà joué ensemble, chercher un autre joueur
                         for j in range(i + 2, len(players)):
                             if players[j] not in used_players and (playerA, players[j]) not in previous_pairs:
                                 playerB = players[j]
@@ -180,6 +168,7 @@ class MenuView:
         print("\n=== Création d'un nouveau tournoi ===")
 
         while True:
+
             name = input("Nom du tournoi : ").strip()
             if name.replace(" ", "").isalpha():
                 break
@@ -257,7 +246,7 @@ class MenuView:
                                             \n(score_playerA == 0 and score_playerB == 0) or \
                                             \n(score_playerA == 0.5 and score_playerB != 0.5)")'''
             print(f"{round_instance}")
-            print(f" *** Give a score and the winner of the Match *** ")
+            print(" *** Give a score and the winner of the Match *** ")
             print()
             valid_scores = False
             while not valid_scores:
@@ -299,7 +288,7 @@ class MenuView:
                 print("Draw match")
         round_instance.finished()
         selected_tournament.rounds.append(round_instance)
-        print(round_instance)
+
     @staticmethod
     def disply_all_details_rounds_and_matchs(tournaments, sorted_players=None):
         for index, tournament in enumerate(tournaments, 1):
@@ -332,7 +321,6 @@ class MenuView:
                 print(f"\nRound {round_instance.number}")
                 print(f"Beginning : {round_instance.beginning}")
                 print(f"End : {round_instance.end}")
-                f"- {round_instance.end }"
                 print("\nMatchs :")
                 for match in round_instance.matchs:
                     print(

@@ -1,6 +1,7 @@
 from datetime import datetime
 from models.model_match import Match
 
+
 class Round:
     def __init__(self, number: int, matchs=None, beginning=None):
         self.number = number
@@ -8,15 +9,8 @@ class Round:
         self.end = None
         self.matchs = matchs if matchs else []
 
-    def all_matches_completed(self):
-        """Check if all matches in the round have results."""
-        return all(match.result is not None for match in self.matchs)
-
     def finished(self):
-        if self.all_matches_completed():
-            self.end = datetime.now()
-        else:
-            raise ValueError("Cannot finish round: not all matches are completed.")
+        self.end = datetime.now()
 
     def __repr__(self):
         beginning_str = (
@@ -24,12 +18,7 @@ class Round:
             if self.beginning
             else "Not started"
         )
-        end_str = (
-            self.end.strftime("%Y-%m-%d %H:%M:%S")
-            if self.end
-            else ""
-        )
-        return f"Round {self.number} - Beginning: {beginning_str}, End: {end_str}, Matchs: {len(self.matchs)}"
+        return f"Round {self.number} - Beginning: {beginning_str}"
 
     def to_dict(self):
         return {

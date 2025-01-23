@@ -79,4 +79,12 @@ des matchs joués, et du classement des joueurs pour tous les tournois.
 - Les images sont sauvegardées dans un dossier `images/`, organisé par sous-dossier correspondant aux catégories des livres.
 
 4/##Voici la structure des fichiers et dossiers générés par le script :
-/mon-projet-de-python/ │ ├── 1-main.py 2-json_manager.py 3-player_manager.py # Code principal du python et d'autre fichiers  ├── requirements.txt # Liste des dépendances ├── README.md # Fichier d'explication ├── .gitignore # Exclusion des fichiers pycach et .venv et .idea├── controllers/ # Dossier contenant un fichier controller.py ├── views # Dossier contenant un fichier menu.py ├── models # Dossier contenant des fichier 1-model_player 2-model_tournament 3-model-round 4-model_match |── flake8_report # Pour effectuer la mise en forme et le nettoyage du code 
+/mon-projet-de-python/ │ ├── 1-main.py 2-json_manager.py 3-player_manager.py
+ # Code principal du python et d'autre fichiers  ├── requirements.txt
+ # Liste des dépendances ├── README.md
+ # Fichier d'explication ├── .gitignore
+ # Exclusion des fichiers pycach et .venv et .idea├── controllers/
+ # Dossier contenant un fichier controller.py ├── views
+ # Dossier contenant un fichier menu.py ├── models
+ # Dossier contenant des fichier 1-model_player 2-model_tournament 3-model-round 4-model_match |── flake8_report
+ # Pour effectuer la mise en forme et le nettoyage du code
