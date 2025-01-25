@@ -84,7 +84,6 @@ class MenuView:
         if not players:
             print("Aucun joueur sélectionné.", flush=True)
             return
-
         print("\n=== Liste des joueurs sélectionnés ===")
         for i, player in enumerate(players, start=1):
             # Vérifier si le joueur est un dictionnaire ou une instance de Player
@@ -100,48 +99,11 @@ class MenuView:
     @staticmethod
     def generate_pairs(players, previous_pairs=None):
         """
-        Génère des paires de joueurs en fonction de leurs scores et évite les matchs répétés.
-        :param players: Liste des joueurs.
-        :param previous_pairs: Liste des paires précédentes pour éviter les répétitions.
-        :return: Liste des paires de joueurs.
-        """
+       Génère des paires aléatoires à partir de la liste de joueurs fournie.
+       """
         if len(players) < 2:
             print("Pas assez de joueurs pour générer des paires.")
             return []
-
-        # Trier les joueurs par score (du plus élevé au plus bas)
-        players.sort(key=lambda player: player.score, reverse=True)
-
-        # Randomiser les joueurs ayant le même score
-        i = 0
-        while i < len(players) - 1:
-            j = i
-            while j < len(players) - 1 and players[j].score == players[j + 1].score:
-                j += 1
-            if j > i:
-                random.shuffle(players[i:j + 1])
-            i = j + 1
-
-        pairs = []
-        used_players = set()
-
-        for i in range(0, len(players), 2):
-            playerA = players[i]
-            playerB = players[i + 1] if i + 1 < len(players) else None
-
-            if previous_pairs and playerB:
-                # Éviter les matchs répétés
-                for pair in previous_pairs:
-                    if (playerA in pair and playerB in pair):
-                        for j in range(i + 2, len(players)):
-                            if players[j] not in used_players and (playerA, players[j]) not in previous_pairs:
-                                playerB = players[j]
-                                break
-            if playerB:
-                pairs.append((playerA, playerB))
-                used_players.add(playerA)
-                used_players.add(playerB)
-        return pairs
 
     @staticmethod
     def display_players_ranking(players):
@@ -238,7 +200,6 @@ class MenuView:
                                f"{playerB.firstName} {playerB.lastName} {playerB.score}"])
         # Afficher le tableau
         print(tabulate(table_data, headers=["Pairs", "PlayerA", "vs", "PlayerB"], tablefmt="pretty"))
-        print()
         for playerA, playerB in pairs:
             '''All those combinations are wrongs : \
                                           \n(score_playerA == 1 and score_playerB != 0) or \
@@ -247,7 +208,6 @@ class MenuView:
                                             \n(score_playerA == 0.5 and score_playerB != 0.5)")'''
             print(f"{round_instance}")
             print(" *** Give a score and the winner of the Match *** ")
-            print()
             valid_scores = False
             while not valid_scores:
                 try:

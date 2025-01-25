@@ -135,9 +135,14 @@ class TournamentController:
 
     @staticmethod
     def generate_pairs(players, previous_pairs=None):
+        MenuView.generate_pairs(players)
         """
-        Génère des paires aléatoires à partir de la liste de joueurs fournie.
-        """
+       Génère des paires de joueurs en fonction de leurs scores (ordre décroissant).
+       Si plusieurs joueurs ont le même score, ils sont randomisés entre eux.
+       :param players: Liste des joueurs.
+       :param previous_pairs: Liste des paires précédentes pour éviter les répétitions (optionnel).
+       :return: Liste des paires de joueurs.
+       """
         if len(players) < 2:
             MenuView.display_message("Pas assez de joueurs pour générer des paires.")
             return []
@@ -145,6 +150,43 @@ class TournamentController:
         # Mélanger et générer des paires
         random.shuffle(players)
         pairs = [(players[i], players[i + 1]) for i in range(0, len(players) - 1, 2)]
+        return pairs
+        # Trier les joueurs par score (du plus élevé au plus bas)
+        players.sort(key=lambda player: player.score, reverse=True)
+
+        # Randomiser les joueurs ayant le même score
+        i = 0
+        while i < len(players) - 1:
+            j = i
+            # Trouver la plage de joueurs avec le même score
+            while j < len(players) - 1 and players[j].score == players[j + 1].score:
+                j += 1
+            # Randomiser cette plage
+            if j > i:
+                random.shuffle(players[i:j + 1])
+            i = j + 1
+
+        # Générer les paires en associant les joueurs dans l'ordre trié
+        pairs = []
+        used_players = set()
+
+        for i in range(0, len(players), 2):
+            playerA = players[i]
+            playerB = players[i + 1] if i + 1 < len(players) else None
+
+            # Éviter les matchs répétés si previous_pairs est fourni
+            if previous_pairs and playerB:
+                for pair in previous_pairs:
+                    if (playerA in pair and playerB in pair):
+                        # Trouver un autre joueur pour playerB
+                        for j in range(i + 2, len(players)):
+                            if players[j] not in used_players and (playerA, players[j]) not in previous_pairs:
+                                playerB = players[j]
+                                break
+            if playerB:
+                pairs.append((playerA, playerB))
+                used_players.add(playerA)
+                used_players.add(playerB)
         return pairs
 
     def playing_rounds(self):
