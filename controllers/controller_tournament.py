@@ -29,8 +29,6 @@ class TournamentController:
                     "players": [
                         # Vérifier le type de player
                         player.to_dict()
-                        if isinstance(player, Player)
-                        else player
                         for player in tournament.players
                     ],
                     "rounds": [round.to_dict() for round in tournament.rounds],  # Utilisation de to_dict
@@ -134,8 +132,9 @@ class TournamentController:
                 MenuView.display_message("Invalid number. Please try again.")
 
     @staticmethod
-    def generate_pairs(players, previous_pairs=None):
+    def generate_pairs(players, round_number, previous_pairs=None):
         MenuView.generate_pairs(players)
+
         """
        Génère des paires de joueurs en fonction de leurs scores (ordre décroissant).
        Si plusieurs joueurs ont le même score, ils sont randomisés entre eux.
@@ -143,33 +142,16 @@ class TournamentController:
        :param previous_pairs: Liste des paires précédentes pour éviter les répétitions (optionnel).
        :return: Liste des paires de joueurs.
        """
-        if len(players) < 2:
-            MenuView.display_message("Pas assez de joueurs pour générer des paires.")
-            return []
-
-        # Mélanger et générer des paires
-        random.shuffle(players)
-        pairs = [(players[i], players[i + 1]) for i in range(0, len(players) - 1, 2)]
-        return pairs
+        if round_number == 0:
+            # Mélanger et générer des paires
+            random.shuffle(players)
+            pairs = [(players[i], players[i + 1]) for i in range(0, len(players) - 1, 2)]
+            return pairs
         # Trier les joueurs par score (du plus élevé au plus bas)
         players.sort(key=lambda player: player.score, reverse=True)
-
-        # Randomiser les joueurs ayant le même score
-        i = 0
-        while i < len(players) - 1:
-            j = i
-            # Trouver la plage de joueurs avec le même score
-            while j < len(players) - 1 and players[j].score == players[j + 1].score:
-                j += 1
-            # Randomiser cette plage
-            if j > i:
-                random.shuffle(players[i:j + 1])
-            i = j + 1
-
         # Générer les paires en associant les joueurs dans l'ordre trié
         pairs = []
         used_players = set()
-
         for i in range(0, len(players), 2):
             playerA = players[i]
             playerB = players[i + 1] if i + 1 < len(players) else None
@@ -191,7 +173,7 @@ class TournamentController:
 
     def playing_rounds(self):
         """
-        Joue 4 rounds du tournoi en générant des paires et en mettant à jour les scores.
+        Joue quatre rounds du tournoi en générant des paires et en mettant à jour les scores.
         """
         if not self.selected_tournament:
             MenuView.display_message("No tournament selected.You mast select a tournament from this list\n")
@@ -207,9 +189,8 @@ class TournamentController:
             MenuView.display_message(f"\n=== Round {i} ===")
             # Créer une instance de Round
             round_instance = Round(number=f"{i}")
-
             # Générer des paires en fonction des scores et éviter les répétitions
-            pairs = self.generate_pairs(self.selected_tournament.players, previous_pairs)
+            pairs = self.generate_pairs(self.selected_tournament.players, round_number=i, previous_pairs=None)
             previous_pairs.extend(pairs)  # Ajouter les paires actuelles à la liste des paires précédentes
             # Jouer les matchs du round
             MenuView.playing_rounds(pairs, round_instance, self.selected_tournament)
@@ -262,27 +243,14 @@ class TournamentController:
             return
         self.select_a_tournament()
         MenuView.display_message(f"Display ranking of players / 'tournament': {self.selected_tournament.name}")
-        # Vérifier que tous les joueurs sont des instances de Player
-        players = []
-        for player in self.selected_tournament.players:
-            if isinstance(player, Player):  # Si c'est déjà un objet Player
-                players.append(player)
-            elif isinstance(player, dict):  # Si c'est un dictionnaire
-                try:
-                    # Convertir le dictionnaire en objet Player
-                    player_obj = Player.from_dict(player)
-                    players.append(player_obj)
-                except (TypeError, KeyError) as e:
-                    MenuView.display_message(f"Erreur lors de la conversion du joueur : {e}. Données : {player}")
-            else:
-                MenuView.display_message(f"Type de joueur non reconnu : {type(player)}")
-
         # Trier les joueurs par score décroissant
         sorted_players = sorted(
-            players,
-            key=lambda player: player.score,  # Utiliser player.score
+            self.selected_tournament.players,
+            key=lambda player: player.score,  # Assurez-vous que player.score est utilisé ici
             reverse=True
         )
+        # Update the selected tournament's players list with the sorted list
+        self.selected_tournament.players = sorted_players
         # Afficher le classement
         MenuView.display_players_ranking(sorted_players)
         # Sauvegarder les données mises à jour dans tournaments.json

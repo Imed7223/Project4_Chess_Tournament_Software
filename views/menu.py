@@ -1,4 +1,3 @@
-import random
 from models.model_match import Match
 from datetime import datetime
 from models.model_player import Player
@@ -97,13 +96,12 @@ class MenuView:
                 print(f"{i}. Type de joueur non reconnu : {type(player)}")
 
     @staticmethod
-    def generate_pairs(players, previous_pairs=None):
+    def generate_pairs(players):
         """
        Génère des paires aléatoires à partir de la liste de joueurs fournie.
        """
         if len(players) < 2:
             print("Pas assez de joueurs pour générer des paires.")
-            return []
 
     @staticmethod
     def display_players_ranking(players):
