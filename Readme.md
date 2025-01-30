@@ -1,55 +1,53 @@
 Programme de gestion de tournois d'échecs
 Introduction
 
-Ce programme Python permet de gérer les tournois d'échecs pour un club de manière autonome et hors ligne. Il inclut des fonctionnalités de gestion des joueurs, des tournois, des tours, et des rapports, tout en respectant les standards de la programmation orientée objet et du design pattern MVC (Modèle-Vue-Contrôleur).
+Ce programme Python permet de gérer les tournois d'échecs pour un club de manière autonome et hors ligne.
+Il inclut des fonctionnalités de gestion des joueurs, des tournois, des tours, et des rapports, 
+tout en respectant les standards de la programmation orientée objet et du design pattern MVC (Modèle-Vue-Contrôleur).
 Table des matières
 
     1-Prérequis
-
         Installation des dépendances
-
         Exécution du script
-
     2-Fonctionnalités
-
         Phases du programme
-
     3-Structure du projet
-
     4-Fichiers générés
+    5-Génération du rapport flake8-html
 
 Prérequis
 Installation des dépendances
 
-Ce projet nécessite plusieurs bibliothèques Python pour fonctionner correctement. Vous pouvez installer toutes les dépendances à l'aide du fichier requirements.txt.
+Ce projet nécessite plusieurs bibliothèques Python pour fonctionner correctement. 
+Vous pouvez installer toutes les dépendances à l'aide du fichier requirements.txt.
 Étapes pour installer les dépendances :
 
     1-Installer Python : Assurez-vous d'avoir Python installé sur votre machine.
-
+ 
     2-Créer un environnement virtuel (recommandé) :
     bash
     Copy
-
+ 
     python -m venv venv
-
+ 
     3-Activer l'environnement virtuel :
-
+ 
         Sous Windows :
         bash
         Copy
-
+ 
         venv\Scripts\activate
-
+ 
         Sous macOS/Linux :
         bash
         Copy
-
+ 
         source venv/bin/activate
-
+ 
     4-Installer les dépendances :
     bash
     Copy
-
+ 
     pip install -r requirements.txt
 
 Exécution du script
@@ -69,8 +67,10 @@ Pour exécuter le script :
 
 Fonctionnalités
 
-Le script est divisé en plusieurs phases pour lancer le Logiciel de tournoi d’échecs et l'organiser. Le script s'exécute dans la console et sauvegarde toutes
- les données dans des fichiers JSON, garantissant la persistance entre les sessions.
+Le script est divisé en plusieurs phases pour lancer le Logiciel de tournoi d’échecs et l'organiser. 
+Le script s'exécute dans la console et sauvegarde toutes les données dans des fichiers JSON, 
+garantissant la persistance entre les sessions.
+
 Phases du programme
 
     1-Ajouter un nouveau tournoi : Permet de créer un nouveau tournoi en saisissant des informations comme le nom, le lieu, les dates, et les joueurs inscrits.
@@ -126,7 +126,23 @@ Copy
 
 Fichiers générés
 
-    Fichiers JSON : Les données des tournois, des joueurs, des tours et des matchs sont sauvegardées dans des fichiers JSON pour assurer
-	 la persistance des données entre les sessions.
-
+    Fichiers JSON : Les données des tournois, des joueurs, des tours et des matchs sont sauvegardées dans des fichiers 
+                    JSON pour assurer la persistance des données entre les sessions.
     Rapports : Les rapports de classement et les détails des tournois sont générés et sauvegardés dans des fichiers JSON.
+
+Génération du rapport flake8-html
+Pour vérifier la qualité du code et générer un rapport flake8-html, suivez les étapes suivantes :
+
+   1-Assurez-vous que flake8 et flake8-html sont installés. Si ce n'est pas le cas, installez-les via pip :
+    bash
+    Copy
+   
+    pip install flake8 flake8-html
+   
+   2-Exécutez la commande suivante pour générer le rapport :
+    bash
+    Copy
+   
+    flake8 --format=html --htmldir=flake8_report
+   
+   3-Le rapport sera généré dans le dossier flake8_report. Ouvrez le fichier index.html pour visualiser les résultats.
