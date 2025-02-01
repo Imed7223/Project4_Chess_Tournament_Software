@@ -25,7 +25,7 @@ Vous pouvez installer toutes les dépendances à l'aide du fichier requirements.
     1-Installer Python : Assurez-vous d'avoir Python installé sur votre machine.
  
     2-Créer un environnement virtuel (recommandé) :  
-`pythn -m venv venv`
+`python -m venv venv`
  
     3-Activer l'environnement virtuel :  
         Sous Windows :  
