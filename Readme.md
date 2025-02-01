@@ -24,31 +24,17 @@ Vous pouvez installer toutes les dépendances à l'aide du fichier requirements.
 
     1-Installer Python : Assurez-vous d'avoir Python installé sur votre machine.
  
-    2-Créer un environnement virtuel (recommandé) :
-    bash
-    Copy
+    2-Créer un environnement virtuel (recommandé) :  
+`pythn -m venv venv`
  
-    python -m venv venv
- 
-    3-Activer l'environnement virtuel :
- 
-        Sous Windows :
-        bash
-        Copy
- 
-        venv\Scripts\activate
- 
-        Sous macOS/Linux :
-        bash
-        Copy
- 
-        source venv/bin/activate
+    3-Activer l'environnement virtuel :  
+        Sous Windows :  
+`venv\Scripts\activate`  
+Sous macOS/Linux :  
+`source venv/bin/activate`
  
     4-Installer les dépendances :
-    bash
-    Copy
- 
-    pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 Exécution du script
 
@@ -60,18 +46,16 @@ Pour exécuter le script :
     2-Assurez-vous que l'environnement virtuel est activé (si utilisé).
 
     3-Exécutez le script en utilisant la commande suivante :
-    bash
-    Copy
 
-    python main.py
+`python main.py`
 
-Fonctionnalités
+## Fonctionnalités
 
 Le script est divisé en plusieurs phases pour lancer le Logiciel de tournoi d’échecs et l'organiser. 
 Le script s'exécute dans la console et sauvegarde toutes les données dans des fichiers JSON, 
 garantissant la persistance entre les sessions.
 
-Phases du programme
+#### Phases du programme
 
     1-Ajouter un nouveau tournoi : Permet de créer un nouveau tournoi en saisissant des informations comme le nom, le lieu, les dates, et les joueurs inscrits.
 
@@ -96,7 +80,7 @@ Phases du programme
 
     11-Quitter : Termine l'exécution du programme.
 
-Structure du projet
+#### Structure du projet
 
 Voici la structure des fichiers et dossiers du projet :
 ```
@@ -124,24 +108,21 @@ Voici la structure des fichiers et dossiers du projet :
 │
 └── flake8_report/              # Rapports de formatage et de nettoyage du code
 ```
-Fichiers générés
+#### Fichiers générés
 
     Fichiers JSON : Les données des tournois, des joueurs, des tours et des matchs sont sauvegardées dans des fichiers 
                     JSON pour assurer la persistance des données entre les sessions.
     Rapports : Les rapports de classement et les détails des tournois sont générés et sauvegardés dans des fichiers JSON.
 
-Génération du rapport flake8-html
+#### Génération du rapport flake8-html
 Pour vérifier la qualité du code et générer un rapport flake8-html, suivez les étapes suivantes :
 
    1-Assurez-vous que flake8 et flake8-html sont installés. Si ce n'est pas le cas, installez-les via pip :
-    bash
-    Copy
    
-    pip install flake8 flake8-html
+`pip install flake8 flake8-html`
    
    2-Exécutez la commande suivante pour générer le rapport :
-    bash
-   
-    flake8 --format=html --htmldir=flake8_report
+
+`flake8 --format=html --htmldir=flake8_report`
    
    3-Le rapport sera généré dans le dossier flake8_report. Ouvrez le fichier index.html pour visualiser les résultats.
