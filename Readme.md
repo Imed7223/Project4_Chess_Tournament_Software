@@ -1,10 +1,10 @@
-Programme de gestion de tournois d'échecs
-Introduction
+# Programme de gestion de tournois d'échecs
+## Introduction
 
 Ce programme Python permet de gérer les tournois d'échecs pour un club de manière autonome et hors ligne.
 Il inclut des fonctionnalités de gestion des joueurs, des tournois, des tours, et des rapports, 
 tout en respectant les standards de la programmation orientée objet et du design pattern MVC (Modèle-Vue-Contrôleur).
-Table des matières
+## Table des matières
 
     1-Prérequis
         Installation des dépendances
@@ -15,8 +15,8 @@ Table des matières
     4-Fichiers générés
     5-Génération du rapport flake8-html
 
-Prérequis
-Installation des dépendances
+## Prérequis
+### Installation des dépendances
 
 Ce projet nécessite plusieurs bibliothèques Python pour fonctionner correctement. 
 Vous pouvez installer toutes les dépendances à l'aide du fichier requirements.txt.
@@ -99,7 +99,7 @@ Phases du programme
 Structure du projet
 
 Voici la structure des fichiers et dossiers du projet :
-Copy
+```
 
 /mon-projet-de-python/
 │
@@ -123,7 +123,7 @@ Copy
 │   └── model_match.py          # Modèle pour les matchs
 │
 └── flake8_report/              # Rapports de formatage et de nettoyage du code
-
+```
 Fichiers générés
 
     Fichiers JSON : Les données des tournois, des joueurs, des tours et des matchs sont sauvegardées dans des fichiers 
@@ -141,7 +141,6 @@ Pour vérifier la qualité du code et générer un rapport flake8-html, suivez l
    
    2-Exécutez la commande suivante pour générer le rapport :
     bash
-    Copy
    
     flake8 --format=html --htmldir=flake8_report
    
