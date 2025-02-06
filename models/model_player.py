@@ -7,6 +7,8 @@ class Player:
         self.score_playerB = None
         self.playerB = None
         self.score_playerA = None
+        ''' vérifie si une chaîne de caractères national_id correspond à un format spécifique 
+         en utilisant l'expression régulière r"[A-Z]{2}\d{5}"'''
         if not re.fullmatch(r"[A-Z]{2}\d{5}", national_id):
             raise ValueError("L'ID doit être au format 'AB12345'.")
         self.lastName = lastName

@@ -41,6 +41,11 @@ class Tournament:
                 f" Description:{self.description})")
 
     def to_dict(self):
+        '''Convertit l'objet en un dictionnaire sérialisable.
+
+           Retourne:
+               dict: Un dictionnaire contenant les informations de l'objet.
+            '''
         return {
             "name": self.name,
             "place": self.place,
@@ -53,6 +58,14 @@ class Tournament:
 
     @classmethod
     def from_dict(cls, data):
+        '''Crée une instance de la classe à partir d'un dictionnaire.
+
+          Args:
+              data (dict): Dictionnaire contenant les données de l'objet.
+
+          Retourne:
+              cls: Une instance de la classe avec les valeurs extraites du dictionnaire.
+          '''
         players = [Player.from_dict(p) for p in data.get("players", [])]
         rounds = [Round.from_dict(r) for r in data.get("rounds", [])]
         return cls(

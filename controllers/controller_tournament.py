@@ -1,4 +1,4 @@
-from json_manager import JSONManager
+from views.json_manager import JSONManager
 from models.model_tournament import Tournament
 from views.menu import MenuView
 from models.model_round import Round
